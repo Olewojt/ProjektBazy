@@ -18,10 +18,6 @@
                         <a href='newPatient.php'><button type="button" class="btn btn-primary">Dodaj</button></a>
                         <a href='dataImport.php'><button type="button" class="btn btn-primary">Importuj</button></a>
                     </ul>
-
-                    <!-- <div class="col-md-1 text-end">
-                        <button type="button" class="btn btn-primary">Dodaj</button>
-                    </div> -->
             </header>
         </div>
 
@@ -32,9 +28,9 @@
                     include 'db.php';
                     use Shuchkin\SimpleXLSX;
 
-                    $db = Baza::getConnection();
-                    $tab = Baza::getTable($_GET['name']);
-                    $row = $tab->fetch_assoc();
+                    $db = Baza::getConnection(); // Utworz obiekt baza ktory inicjuje połączenie z bazą
+                    $tab = Baza::getTable($_GET['name']); // Obiekt już istnieje więc można wykonywać funckje statyczne na tej klasie i jak oliwka brazil skakać na kutasie
+                    $row = $tab->fetch_assoc(); // Niestety, trzeba pobrać choć jeden rekord, żeby mieć dostęp do nazw kolumn ;( justPHPthings
 
                     echo "<thead>";
                         foreach(array_keys($row) as $header) {

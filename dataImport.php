@@ -15,11 +15,11 @@
         <header class="align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="mockup.php?index=0" class="nav-link px-4 link-dark">Lekarze</a></li>
-                <li><a href="mockup.php?index=1" class="nav-link px-4 link-dark">Pielegniarki</a></li>
-                <li><a href="mockup.php?index=2" class="nav-link px-4 link-dark">Pacjenci</a></li>
-                <li><a href="mockup.php?index=3" class="nav-link px-4 link-dark">Zabiegi</a></li>
-                <li><a href="mockup.php?index=4" class="nav-link px-4 link-dark">Oddziały</a></li>
+                <li><a href="mockup.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
+                <li><a href="mockup.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
+                <li><a href="mockup.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
+                <li><a href="mockup.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
+                <li><a href="mockup.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
             </ul>
         </header>
 
@@ -30,7 +30,7 @@
 
         <?php
             // print_r($_FILES['file']['tmp_name']);
-            $file = SimpleXLSX::parse($_FILES['file']['tmp_name']);
+            $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
             $data = $file->rows();
             echo(count($data[0]));
             echo('<br/>');

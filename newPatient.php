@@ -58,6 +58,7 @@
 
             <?php
                 // print_r($_POST);
+                // Zajebista weryfikacja, jeśli wypełniono 6 pól to jazda XD
                 if (count($_POST) == 6){
                     $db = Baza::getConnection();
                     Baza::addPatient(
