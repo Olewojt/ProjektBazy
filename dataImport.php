@@ -15,11 +15,11 @@
         <header class="align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="mockup.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
-                <li><a href="mockup.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
-                <li><a href="mockup.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
-                <li><a href="mockup.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
-                <li><a href="mockup.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
+                <li><a href="index.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
+                <li><a href="index.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
+                <li><a href="index.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
+                <li><a href="index.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
+                <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
             </ul>
         </header>
 
@@ -32,15 +32,19 @@
             // print_r($_FILES['file']['tmp_name']);
             $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
             $data = $file->rows();
-            echo(count($data[0]));
-            echo('<br/>');
-            foreach($data as $row){
-                foreach($row as $r){
-                    print_r($r);
-                    print_r(" ");
-                }
-                echo "<br>";
-            }
+            // Podjebane z gita autora
+            // $header_values = $data = [];
+            // foreach ($file->rows() as $k => $r) {
+            //     if ($k === 0) {
+            //         $header_values = $r;
+            //         continue;
+            //     }
+            //     $data[] = array_combine($header_values, $r);
+            // }
+
+            $db = Baza::getConnection();
+
+            Baza::import($data, "Lekarze");
         ?>
     </div>
 </body>

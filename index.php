@@ -10,11 +10,11 @@
         <div class="container">
             <header class="align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
                     <ul class="nav col-10 col-md-auto mb-2 justify-content-center mb-md-0">
-                        <li><a href="mockup.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
-                        <li><a href="mockup.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
-                        <li><a href="mockup.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
-                        <li><a href="mockup.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
-                        <li><a href="mockup.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
+                        <li><a href="index.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
+                        <li><a href="index.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
+                        <li><a href="index.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
+                        <li><a href="index.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
+                        <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
                         <a href='newPatient.php'><button type="button" class="btn btn-primary">Dodaj</button></a>
                         <a href='dataImport.php'><button type="button" class="btn btn-primary">Importuj</button></a>
                     </ul>
@@ -30,22 +30,22 @@
 
                     $db = Baza::getConnection(); // Utworz obiekt baza ktory inicjuje połączenie z bazą
                     $tab = Baza::getTable($_GET['name']); // Obiekt już istnieje więc można wykonywać funckje statyczne na tej klasie i jak oliwka brazil skakać na kutasie
-                    $row = $tab->fetch_assoc(); // Niestety, trzeba pobrać choć jeden rekord, żeby mieć dostęp do nazw kolumn ;( justPHPthings
+                    $cols = Baza::columns($_GET['name']);
 
                     echo "<thead>";
-                        foreach(array_keys($row) as $header) {
-                            echo "<th scope='col'>".$header."</th>";
+                        foreach($cols as $col) {
+                            echo "<th scope='col'>".$col."</th>";
                         }
                     echo "</thead>";
 
                     echo "<tbody>";
-                        do {
+                        while ($row = $tab->fetch_assoc()) {
                             echo "<tr>";
                             foreach ($row as $data) {
                                 echo "<td>".$data."</td>";
                             }
                             echo "</tr>";
-                        } while ($row = $tab->fetch_assoc());
+                        }
                     echo "</tbody>";
                 ?>
             </table>
