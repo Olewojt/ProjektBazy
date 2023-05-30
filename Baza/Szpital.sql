@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: May 21, 2023 at 10:04 AM
+-- Generation Time: May 30, 2023 at 03:16 PM
 -- Server version: 8.0.32-0buntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.11
 
@@ -99,6 +99,65 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `getData` (IN `tableName` VARCHAR(50
     END IF;
 END$$
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `importPrepare` (IN `tableName` VARCHAR(100))  BEGIN
+    IF tableName='Lekarze' THEN
+    	DROP TABLE IF EXISTS Lekarze;
+    	CREATE TABLE Lekarze (
+              ID_Lekarza int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+              Imie varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+              Nazwisko varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci 					NOT NULL,
+              Specjalizacja varchar(50) NOT NULL,
+              Telefon varchar(9) NOT NULL,
+              ID_Oddzialu int NOT NULL
+        );
+    END IF;
+    
+    IF tableName='Oddzialy' THEN
+    	DROP TABLE IF EXISTS Oddzialy;
+		CREATE TABLE Oddzialy (
+          ID_Oddzialu int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          Budynek varchar(100) CHARACTER SET utf8mb4 COLLATE 			utf8mb4_0900_ai_ci NOT NULL,
+          Sektor varchar(100) CHARACTER SET utf8mb4 COLLATE 			utf8mb4_0900_ai_ci NOT NULL,
+          Ulica varchar(100) CHARACTER SET utf8mb4 COLLATE 			utf8mb4_0900_ai_ci NOT NULL
+        );
+    END IF;
+    
+    IF tableName='Pacjenci' THEN
+    DROP TABLE IF EXISTS Pacjenci;
+    	CREATE TABLE Pacjenci (
+          ID_Pacjenta int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          Imie varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+          Nazwisko varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+          PESEL varchar(11) NOT NULL,
+          Telefon varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+          Kod_Pocztowy varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+          Adres varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL
+		);
+    END IF;
+    
+    IF tableName='Pielegniarki' THEN
+    DROP TABLE IF EXISTS Pielegniarki;
+    	CREATE TABLE Pielegniarki (
+          ID_Pielegniarki int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          Imie varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+          Nazwisko varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+          Telefon varchar(9) NOT NULL,
+          ID_Oddzialu int NOT NULL
+	);
+    END IF;
+    
+    IF tableName='Zabiegi' THEN
+    	DROP TABLE IF EXISTS Zabiegi;
+        CREATE TABLE Zabiegi (
+          ID_Zabiegu int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+          ID_Pacjenta int NOT NULL,
+          Rodzaj_Zabiegu varchar(50) NOT NULL,
+          Data_Zabiegu date NOT NULL,
+          ID_Lekarza int NOT NULL
+        );
+    END IF;
+END$$
+
 DELIMITER ;
 
 -- --------------------------------------------------------
@@ -171,9 +230,9 @@ INSERT INTO `Lekarze` (`ID_Lekarza`, `Imie`, `Nazwisko`, `Specjalizacja`, `Telef
 (24, 'Waleria', 'Śliwka', 'Neurolog', '840388705', 18),
 (25, 'Joanna', 'Zimnicki', 'Neurolog', '389154326', 42),
 (26, 'Estera', 'Kopania', 'Patolog', '365710320', 17),
-(27, 'Mojżesz', 'Andruszkiewicz', 'Neurolog', '49463127', 49),
+(27, 'Zenon', 'Andruszkiewicz', 'Neurolog', '49463127', 49),
 (28, 'Rita', 'Czaplicki', 'Archeolog', '179430258', 30),
-(29, 'Zenon', 'Lubas', 'Informatolog', '91066500', 48),
+(29, 'Antonio', 'Lubas', 'Informatolog', '91066500', 48),
 (30, 'Gniewomira', 'Fischer', 'Archeolog', '308544876', 33),
 (31, 'Adriana', 'Sawicz', 'Chirurg', '746764974', 20),
 (32, 'Kazimierz', 'Szczepanek', 'Wykopolog', '290087733', 15),
@@ -336,7 +395,8 @@ INSERT INTO `Pacjenci` (`ID_Pacjenta`, `Imie`, `Nazwisko`, `PESEL`, `Telefon`, `
 (48, 'Najmiła', 'Łysik', '84091953986', '745562697', '00-048', 'ul. Belzebuba 102'),
 (49, 'Karola', 'Masternak', '56112922666', '850208181', '00-049', 'ul. Harda 8'),
 (50, 'Elwira', 'Płachta', '75021569582', '607378376', '00-050', 'ul. Saksońska 75'),
-(51, 'Wojciech', 'Olejko', '12123412354', '999222000', '32423', 'Rzeszów Zalesie');
+(51, 'Wojciech', 'Olejko', '12123412354', '999222000', '32423', 'Rzeszów Zalesie'),
+(52, 'Tomasz', 'Nowak', '21212113143', '345435436', '22-555', 'ul. Ciupapi 23');
 
 -- --------------------------------------------------------
 
@@ -507,8 +567,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 -- Indexes for table `Lekarze`
 --
 ALTER TABLE `Lekarze`
-  ADD PRIMARY KEY (`ID_Lekarza`),
-  ADD KEY `ID_Oddzialu` (`ID_Oddzialu`) USING BTREE;
+  ADD PRIMARY KEY (`ID_Lekarza`);
 
 --
 -- Indexes for table `Oddzialy`
@@ -558,7 +617,7 @@ ALTER TABLE `Oddzialy`
 -- AUTO_INCREMENT for table `Pacjenci`
 --
 ALTER TABLE `Pacjenci`
-  MODIFY `ID_Pacjenta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `ID_Pacjenta` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `Pielegniarki`
@@ -575,12 +634,6 @@ ALTER TABLE `Zabiegi`
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `Lekarze`
---
-ALTER TABLE `Lekarze`
-  ADD CONSTRAINT `Lekarze_ibfk_1` FOREIGN KEY (`ID_Oddzialu`) REFERENCES `Oddzialy` (`ID_Oddzialu`);
 
 --
 -- Constraints for table `Pielegniarki`
