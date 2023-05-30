@@ -35,6 +35,10 @@ class Baza {
         return self::$db->conn->query("CALL filterProcedureDate($filter)");
     }
 
+    public static function prepareImport($table) {
+        return self::$db->conn->query("CALL importPrepare('$table')");
+    }
+
     public static function columns($table) {
         $cols = [
             'Lekarze' => ["ID_Lekarza", "Imie", "Nazwisko", "Specjalizacja", "Telefon", "ID_Oddzialu"],
@@ -46,39 +50,64 @@ class Baza {
         return $cols[$table];
     }
 
+    public static function validate($data, $table): array
+    {
+        foreach ($data as $row) {
+            foreach ($row as $elem){
+                $elem = trim($elem);
+                if (strlen($elem)==0) return $row;
+            }
+        }
+        return [];
+    } 
+
     public static function import($data, $table) {
         $cols = Baza::columns($table);
         $cols = array_slice($cols, 1);
         $data = array_slice($data, 1);
 
-        echo "<table class='table table-responsive' style='width: 90%'>";
-        echo "<thead>";
-        foreach( $cols as $col ) {
-            printf("<th scope='col'>%s</th>", $col);
-        }
-        echo "</thead>";
+        $validated = Baza::validate($data, $table);
+        // $validated = ['dasad'];
+        // Baza::prepareImport($table);
+        // Jesli dlugosc zwroconej tablicy jest rowna 0 to znaczy ze wszystkie rekordy sa git
+        if ( count($validated) == 0 ) {
+            echo "<table class='table table-responsive' style='width: 90%'>";
+            echo "<thead>";
+            foreach( $cols as $col ) {
+                printf("<th scope='col'>%s</th>", $col);
+            }
+            echo "</thead>";
+    
+            echo "<tbody>";
+            foreach ($data as $row){
+                print(vsprintf("
+                <tr>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                    <td>%s</td>
+                </tr>
+                ", $row));
+            }
+            echo "</tbody>";
+            echo "</table>";
 
-        echo "<tbody>";
-        foreach ($data as $row){
-            print(vsprintf("
-            <tr>
-                <td>%s</td>
-                <td>%s</td>
-                <td>%s</td>
-                <td>%s</td>
-                <td>%s</td>
-            </tr>
-            ", $row));
+            if ( Baza::prepareImport($table) == true) {
+                if ($table=='Lekarze'){
+                    $query = "INSERT INTO Lekarze(Imie, Nazwisko, Specjalizacja, Telefon, ID_Oddzialu) VALUES ('%s', '%s', '%s', '%s', '%s')";
+                    foreach($data as $row){
+                        self::$db->conn->query(vsprintf($query, $row));
+                        // echo vsprintf($query, $row);
+                    }
+                }
+            }
+
+        } else {
+            print_r($validated);
         }
-        echo "</tbody>";
-        echo "</table>";
+
         // self::$db->conn->query("CALL import($table)");
-
-        // if ($table=='Lekarze'){
-        //     foreach($data as $row){
-        //         self::$db->conn->quert("INSERT INTO ")
-        //     }
-        // }
 
     }
 }   

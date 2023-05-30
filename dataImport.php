@@ -32,15 +32,6 @@
             // print_r($_FILES['file']['tmp_name']);
             $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
             $data = $file->rows();
-            // Podjebane z gita autora
-            // $header_values = $data = [];
-            // foreach ($file->rows() as $k => $r) {
-            //     if ($k === 0) {
-            //         $header_values = $r;
-            //         continue;
-            //     }
-            //     $data[] = array_combine($header_values, $r);
-            // }
 
             $db = Baza::getConnection();
 
