@@ -112,7 +112,7 @@ class Baza {
                 }
 
                 if ($table=='Pacjenci'){
-                    $query = "INSERT INTO Pacjenci(Imie, Nazwisko, PESEL, Telefon, Adres, Kod_Pocztowy) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
+                    $query = "INSERT INTO Pacjenci(Imie, Nazwisko, PESEL, Telefon, Kod_Pocztowy, Adres) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
                     foreach($data as $row){
                         self::$db->conn->query(vsprintf($query, $row));
                     }

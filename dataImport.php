@@ -40,31 +40,34 @@
                     $db = Baza::getConnection();
                     printf('
                         <h3>%s</h3>
-                        <form enctype="multipart/form-data" method="GET" action="dataImport.php?">
-                        <input type="file" name="file accept=".xlsx">
+                        <form enctype="multipart/form-data" method="POST" action="dataImport.php?name=%s">
+                        <input type="file" name="file" accept=".xlsx">
+                        <input type="hidden" name="name" value="%s">
                         <button type="submit" class="btn btn-primary">Dodaj</button>
                         </form>
-                    ', $_GET['name']);
+                    ', $_GET['name'], $_GET['name'], $_GET['name']);
                     if(!empty($_FILES['file']['tmp_name'])){
                         $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
                         $data = $file->rows();
-                        print_r($data);
-                    }
 
-                    if ($_GET['name']=="Lekarze"){
-                        Baza::import($data, "Lekarze");
-                    }
-                    if ($_GET['name']=="Pielegniarki"){
-                        Baza::import($data, "Pielegniarki");
-                    }
-                    if ($_GET['name']=="Pacjenci"){
-                        Baza::import($data, "Pacjenci");
-                    }
-                    if ($_GET['name']=="Zabiegi"){
-                        Baza::import($data, "Zabiegi");
-                    }
-                    if ($_GET['name']=="Oddzialy"){
-                        Baza::import($data, "Oddzialy");
+                        if ($_POST['name']=="Lekarze"){
+                            Baza::import($data, "Lekarze");
+                        }
+                        else if ($_POST['name']=="Pielegniarki"){
+                            Baza::import($data, "Pielegniarki");
+                        }
+                        else if ($_POST['name']=="Pacjenci"){
+                            Baza::import($data, "Pacjenci");
+                        }
+                        else if ($_POST['name']=="Zabiegi"){
+                            Baza::import($data, "Zabiegi");
+                        }
+                        else if ($_POST['name']=="Oddzialy"){
+                            Baza::import($data, "Oddzialy");
+                        }
+                        else {
+                            echo "Wystąpił błąd!";
+                        }
                     }
                 }
             ?>
