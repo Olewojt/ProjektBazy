@@ -50,7 +50,7 @@ class Baza {
         return $cols[$table];
     }
 
-    public static function validate($data, $table): array
+    public static function validate($data): array
     {
         foreach ($data as $row) {
             foreach ($row as $elem){
@@ -80,15 +80,11 @@ class Baza {
     
             echo "<tbody>";
             foreach ($data as $row){
-                print(vsprintf("
-                <tr>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                    <td>%s</td>
-                </tr>
-                ", $row));
+                print("<tr>");
+                foreach ($row as $elem){
+                    printf("<td>%s</td>", $elem);
+                }
+                print("</tr>");
             }
             echo "</tbody>";
             echo "</table>";
@@ -98,7 +94,34 @@ class Baza {
                     $query = "INSERT INTO Lekarze(Imie, Nazwisko, Specjalizacja, Telefon, ID_Oddzialu) VALUES ('%s', '%s', '%s', '%s', '%s')";
                     foreach($data as $row){
                         self::$db->conn->query(vsprintf($query, $row));
-                        // echo vsprintf($query, $row);
+                    }
+                }
+
+                if ($table=='Pielegniarki'){
+                    $query = "INSERT INTO Pielegniarki(Imie, Nazwisko, Telefon, ID_Oddzialu) VALUES ('%s', '%s', '%s', '%s')";
+                    foreach($data as $row){
+                        self::$db->conn->query(vsprintf($query, $row));
+                    }
+                }
+
+                if ($table=='Oddzialy'){
+                    $query = "INSERT INTO Oddzialy(Budynek, Sektor, Ulica) VALUES ('%s', '%s', '%s')";
+                    foreach($data as $row){
+                        self::$db->conn->query(vsprintf($query, $row));
+                    }
+                }
+
+                if ($table=='Pacjenci'){
+                    $query = "INSERT INTO Pacjenci(Imie, Nazwisko, PESEL, Telefon, Adres, Kod_Pocztowy) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
+                    foreach($data as $row){
+                        self::$db->conn->query(vsprintf($query, $row));
+                    }
+                }
+
+                if ($table=='Zabiegi'){
+                    $query = "INSERT INTO Zabiegi(ID_Pacjenta, Rodzaj_Zabiegu, Data_Zabiegu, ID_Lekarza) VALUES ('%s', '%s', '%s', '%s')";
+                    foreach($data as $row){
+                        self::$db->conn->query(vsprintf($query, $row));
                     }
                 }
             }
@@ -106,9 +129,6 @@ class Baza {
         } else {
             print_r($validated);
         }
-
-        // self::$db->conn->query("CALL import($table)");
-
     }
 }   
 ?>

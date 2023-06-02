@@ -23,7 +23,7 @@
                 </ul>
             </header>
 
-            <form method="POST" action="newPatient.php">
+            <form method="POST" onsubmit="return confirm ('Czy napewno chcesz dodać pacjenta?');" action="newPatient.php">
                 <div class="form-group">
                     <label for="name">Imie</label>
                     <input type="text" class="form-control" name='name' maxlength="100" required>
@@ -57,9 +57,16 @@
             </form>
 
             <?php
-                // print_r($_POST);
-                // Zajebista weryfikacja, jeśli wypełniono 6 pól to jazda XD
-                if (count($_POST) == 6){
+                $valid = False;
+                foreach ($_POST as $elem){
+                    if (empty($elem)){
+                        $valid = False;
+                    } else {
+                        $valid = True;
+                    }
+                }
+
+                if($valid){
                     $db = Baza::getConnection();
                     Baza::addPatient(
                         $_POST['name'],
@@ -69,8 +76,6 @@
                         $_POST['zip_code'],
                         $_POST['address']
                     );
-                } else {
-                    echo "Proszę wypełnić wszystkie pola!";
                 }
             ?>
         </div>

@@ -22,21 +22,54 @@
                 <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
             </ul>
         </header>
+        
+        <div class="container d-flex justify-content-center">
+            <h2>Wybierz jakie dane chcesz zaimportować<hr></h2>
+        </div>
+        <div class="container d-flex justify-content-around">
+                <a href="dataImport.php?name=Lekarze"><button class="btn btn-primary">Lekarze</button></a>
+                <a href="dataImport.php?name=Pielegniarki"><button class="btn btn-primary">Pielegniarki</button></a>
+                <a href="dataImport.php?name=Pacjenci"><button class="btn btn-primary">Pacjenci</button></a>
+                <a href="dataImport.php?name=Zabiegi"><button class="btn btn-primary">Zabiegi</button></a>
+                <a href="dataImport.php?name=Oddzialy"><button class="btn btn-primary">Oddziały</button></a>
+        </div>
 
-        <form enctype="multipart/form-data" method="POST" action="dataImport.php">
-            <input type='file' name='file' accept='.xlsx'>
-            <button type="submit" class="btn btn-primary">Dodaj</button>
-        </form>
+        <div class="container d-flex justify-content-around m-3">
+            <?php
+                if (isset($_GET['name'])){
+                    $db = Baza::getConnection();
+                    printf('
+                        <h3>%s</h3>
+                        <form enctype="multipart/form-data" method="GET" action="dataImport.php?">
+                        <input type="file" name="file accept=".xlsx">
+                        <button type="submit" class="btn btn-primary">Dodaj</button>
+                        </form>
+                    ', $_GET['name']);
+                    if(!empty($_FILES['file']['tmp_name'])){
+                        $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
+                        $data = $file->rows();
+                        print_r($data);
+                    }
 
-        <?php
-            // print_r($_FILES['file']['tmp_name']);
-            $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
-            $data = $file->rows();
+                    if ($_GET['name']=="Lekarze"){
+                        Baza::import($data, "Lekarze");
+                    }
+                    if ($_GET['name']=="Pielegniarki"){
+                        Baza::import($data, "Pielegniarki");
+                    }
+                    if ($_GET['name']=="Pacjenci"){
+                        Baza::import($data, "Pacjenci");
+                    }
+                    if ($_GET['name']=="Zabiegi"){
+                        Baza::import($data, "Zabiegi");
+                    }
+                    if ($_GET['name']=="Oddzialy"){
+                        Baza::import($data, "Oddzialy");
+                    }
+                }
+            ?>
+        </div>
 
-            $db = Baza::getConnection();
-
-            Baza::import($data, "Lekarze");
-        ?>
     </div>
 </body>
 </html>
