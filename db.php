@@ -1,5 +1,8 @@
 <?php
 
+include 'SimpleXLSXGen.php';
+use Shuchkin\SimpleXLSXGen;
+
 // Singleton do połączenia z bazom
 class Baza {
     private static $db;
@@ -61,6 +64,33 @@ class Baza {
         return [];
     } 
 
+    public static function export($table){
+
+        $cols = Baza::columns($table);
+        $cols = array_slice($cols, 1);
+        $parsedData = [$cols];
+        $data = self::$db->conn->query("CALL getData('$table')");
+        echo "<table class='table table-responsive' style='width: 90%'>";
+            echo "<thead>";
+            foreach( $cols as $col ) {
+                printf("<th scope='col'>%s</th>", $col);
+            }
+            echo "</thead>";
+        while ($rowData = mysqli_fetch_row($data)){
+            $rowData = array_slice($rowData, 1);
+            print("<tr>");
+            foreach ($rowData as $elem){
+                printf("<td>%s</td>", $elem);
+            }
+            print("</tr>");
+            array_push($parsedData, $rowData);
+        }
+        echo "</tbody>";
+        echo "</table>";
+
+        return SimpleXLSXGen::fromArray($parsedData);
+    }
+
     public static function import($data, $table) {
         $cols = Baza::columns($table);
         $cols = array_slice($cols, 1);
@@ -97,28 +127,28 @@ class Baza {
                     }
                 }
 
-                if ($table=='Pielegniarki'){
+                else if ($table=='Pielegniarki'){
                     $query = "INSERT INTO Pielegniarki(Imie, Nazwisko, Telefon, ID_Oddzialu) VALUES ('%s', '%s', '%s', '%s')";
                     foreach($data as $row){
                         self::$db->conn->query(vsprintf($query, $row));
                     }
                 }
 
-                if ($table=='Oddzialy'){
+                else if ($table=='Oddzialy'){
                     $query = "INSERT INTO Oddzialy(Budynek, Sektor, Ulica) VALUES ('%s', '%s', '%s')";
                     foreach($data as $row){
                         self::$db->conn->query(vsprintf($query, $row));
                     }
                 }
 
-                if ($table=='Pacjenci'){
+                else if ($table=='Pacjenci'){
                     $query = "INSERT INTO Pacjenci(Imie, Nazwisko, PESEL, Telefon, Kod_Pocztowy, Adres) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
                     foreach($data as $row){
                         self::$db->conn->query(vsprintf($query, $row));
                     }
                 }
 
-                if ($table=='Zabiegi'){
+                else if ($table=='Zabiegi'){
                     $query = "INSERT INTO Zabiegi(ID_Pacjenta, Rodzaj_Zabiegu, Data_Zabiegu, ID_Lekarza) VALUES ('%s', '%s', '%s', '%s')";
                     foreach($data as $row){
                         self::$db->conn->query(vsprintf($query, $row));
@@ -127,7 +157,7 @@ class Baza {
             }
 
         } else {
-            print_r($validated);
+            printf("Dany rekord jest niepoprawny: %s", print_r($validated));
         }
     }
 }   

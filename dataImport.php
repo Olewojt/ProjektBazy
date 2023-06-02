@@ -45,6 +45,7 @@
                         <input type="hidden" name="name" value="%s">
                         <button type="submit" class="btn btn-primary">Dodaj</button>
                         </form>
+                        </div>
                     ', $_GET['name'], $_GET['name'], $_GET['name']);
                     if(!empty($_FILES['file']['tmp_name'])){
                         $file = SimpleXLSX::parse($_FILES['file']['tmp_name']); // Sciezka do pliku ze zmiennej globalnej od php (php tworzy plik tymczasowy)
@@ -71,8 +72,6 @@
                     }
                 }
             ?>
-        </div>
-
     </div>
 </body>
 </html>

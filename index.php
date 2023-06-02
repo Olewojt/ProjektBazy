@@ -15,8 +15,9 @@
                         <li><a href="index.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
                         <li><a href="index.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
                         <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
-                        <a href='newPatient.php' class='px-4'><button type="button" class="btn btn-primary">Dodaj</button></a>
-                        <a href='dataImport.php'><button type="button" class="btn btn-primary">Importuj</button></a>
+                        <a href='newPatient.php' class='pe-4'><button type="button" class="btn btn-primary">Dodaj</button></a>
+                        <a href='dataImport.php' class='pe-4'><button type="button" class="btn btn-primary">Importuj</button></a>
+                        <a href='dataExport.php'><button type="button" class="btn btn-primary">Exportuj</button></a>
                     </ul>
             </header>
         </div>
