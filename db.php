@@ -34,6 +34,10 @@ class Baza {
         self::$db->conn->query("CALL addPatient('$name', '$surname', '$pesel', '$phone', '$zip_code', '$address')");
     }
 
+    public static function addProcedure($patient_id, $type, $date, $doctor_id){
+        self::$db->conn->query("CALL addProcedure('$patient_id', '$type', '$date', '$doctor_id')");
+    }
+
     public static function getProcedureByDate(int $filter){
         return self::$db->conn->query("CALL filterProcedureDate($filter)");
     }

@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title>Mockup</title>
+        <title>Szpital</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     </head>
 
@@ -15,7 +15,7 @@
                         <li><a href="index.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
                         <li><a href="index.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
                         <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
-                        <a href='newPatient.php' class='pe-4'><button type="button" class="btn btn-primary">Dodaj</button></a>
+                        <a href='add.php' class='pe-4'><button type="button" class="btn btn-primary">Dodaj</button></a>
                         <a href='dataImport.php' class='pe-4'><button type="button" class="btn btn-primary">Importuj</button></a>
                         <a href='dataExport.php'><button type="button" class="btn btn-primary">Exportuj</button></a>
                     </ul>
