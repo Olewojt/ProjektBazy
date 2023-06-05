@@ -124,6 +124,7 @@ class Baza {
             echo "</table>";
 
             if ( Baza::prepareImport($table) == true) {
+                self::$db->conn->query("SET FOREIGN_KEY_CHECKS=0");
                 if ($table=='Lekarze'){
                     $query = "INSERT INTO Lekarze(Imie, Nazwisko, Specjalizacja, Telefon, ID_Oddzialu) VALUES ('%s', '%s', '%s', '%s', '%s')";
                     foreach($data as $row){
@@ -158,6 +159,7 @@ class Baza {
                         self::$db->conn->query(vsprintf($query, $row));
                     }
                 }
+                self::$db->conn->query("SET FOREIGN_KEY_CHECKS=1");
             }
 
         } else {
