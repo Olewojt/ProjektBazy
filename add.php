@@ -79,24 +79,24 @@
             <header class="align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
                 <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="index.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
-                    <li><a href="index.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
-                    <li><a href="index.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
-                    <li><a href="index.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
-                    <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
+                    <li><a href="index.php?table=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
+                    <li><a href="index.php?table=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
+                    <li><a href="index.php?table=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
+                    <li><a href="index.php?table=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
+                    <li><a href="index.php?table=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
                 </ul>
             </header>
             <div class="container d-flex justify-content-center">
                 <h2>Dodaj<hr></h2>
             </div>
             <div class="container d-flex justify-content-around">
-                <a href="add.php?name=Pacjent"><button class="btn btn-primary">Pacjenta</button></a>
-                <a href="add.php?name=Zabieg"><button class="btn btn-primary">Zabieg</button></a>
+                <a href="add.php?table=Pacjent"><button class="btn btn-primary">Pacjenta</button></a>
+                <a href="add.php?table=Zabieg"><button class="btn btn-primary">Zabieg</button></a>
             </div>
 
             <?php
-                if(isset($_GET['name'])){
-                    $name = $_GET['name'];
+                if(isset($_GET['table'])){
+                    $name = $_GET['table'];
                     if($name=="Pacjent"){
                         print($form1);
                     }

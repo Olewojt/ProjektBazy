@@ -15,11 +15,11 @@
         <header class="align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
 
             <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="index.php?name=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
-                <li><a href="index.php?name=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
-                <li><a href="index.php?name=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
-                <li><a href="index.php?name=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
-                <li><a href="index.php?name=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
+                <li><a href="index.php?table=Lekarze" class="nav-link px-4 link-dark">Lekarze</a></li>
+                <li><a href="index.php?table=Pielegniarki" class="nav-link px-4 link-dark">Pielegniarki</a></li>
+                <li><a href="index.php?table=Pacjenci" class="nav-link px-4 link-dark">Pacjenci</a></li>
+                <li><a href="index.php?table=Zabiegi" class="nav-link px-4 link-dark">Zabiegi</a></li>
+                <li><a href="index.php?table=Oddzialy" class="nav-link px-4 link-dark">Oddziały</a></li>
             </ul>
         </header>
         
@@ -27,18 +27,18 @@
             <h2>Wybierz jakie dane chcesz exportować<hr></h2>
         </div>
         <div class="container d-flex justify-content-around">
-            <a href="dataExport.php?name=Lekarze"><button class="btn btn-primary">Lekarze</button></a>
-            <a href="dataExport.php?name=Pielegniarki"><button class="btn btn-primary">Pielegniarki</button></a>
-            <a href="dataExport.php?name=Pacjenci"><button class="btn btn-primary">Pacjenci</button></a>
-            <a href="dataExport.php?name=Zabiegi"><button class="btn btn-primary">Zabiegi</button></a>
-            <a href="dataExport.php?name=Oddzialy"><button class="btn btn-primary">Oddziały</button></a>
+            <a href="dataExport.php?table=Lekarze"><button class="btn btn-primary">Lekarze</button></a>
+            <a href="dataExport.php?table=Pielegniarki"><button class="btn btn-primary">Pielegniarki</button></a>
+            <a href="dataExport.php?table=Pacjenci"><button class="btn btn-primary">Pacjenci</button></a>
+            <a href="dataExport.php?table=Zabiegi"><button class="btn btn-primary">Zabiegi</button></a>
+            <a href="dataExport.php?table=Oddzialy"><button class="btn btn-primary">Oddziały</button></a>
         </div>
         <hr>
 
         <?php
-            if(isset($_GET['name'])){
+            if(isset($_GET['table'])){
                 $db = Baza::getConnection();
-                $nazwa = $_GET['name'];
+                $nazwa = $_GET['table'];
                 if ($nazwa=="Lekarze" | $nazwa=="Pielegniarki" | $nazwa=="Pacjenci" | $nazwa=="Zabiegi" | $nazwa=="Oddzialy"){
                     printf("
                         <div class='container mt-3'>
