@@ -45,42 +45,17 @@ class Baza {
         self::$db->conn->query("CALL addProcedure('$patient_id', '$type', '$date', '$doctor_id')");
     }
 
-    public static function getProcedureByDate(int $filter){
-        return self::$db->conn->query("CALL filterProcedureDate($filter)");
-    }
-
     public static function prepareImport($table) {
         return self::$db->conn->query("CALL importPrepare('$table')");
     }
 
     public static function filter($table, $parameters) {
         if ($table=="Zabiegi"){
-            $desiredKeys = array('dateOrder', 'date', 'surname', 'priority');
+            $desiredKeys = array('dateOrder', 'date', 'priority');
             $params = array_intersect_key($parameters, array_flip($desiredKeys));
-
-            $query = "SELECT * FROM Zabiegi WHERE 1=1 ";
-
-            if (!empty($params['date'])){
-                $filter = "AND Data_Zabiegu='%s' ";
-                $filter = sprintf($filter, $params['date']);
-                $concat = "%s %s";
-                $query = sprintf($concat, $query, $filter);
-            }
-            if (!empty($params['priority'])){
-                $filter = "AND Rodzaj_Zabiegu='%s' ";
-                $filter = sprintf($filter, $params['priority']);
-                $concat = "%s %s";
-                $query = sprintf($concat, $query, $filter);
-            }
-            if (!empty($params['dateOrder'])){
-                $filter = "ORDER BY Data_Zabiegu %s";
-                $filter = sprintf($filter, $params['dateOrder']);
-                $concat = "%s %s";
-                $query = sprintf($concat, $query, $filter);
-            }
-
+            $query = sprintf("CALL filterProcedureTable('%s','%s','%s')", $params["date"], $params["priority"], $params["dateOrder"]);
+            echo $query;
             try {
-                // print_r($query);
                 return self::$db->conn->query($query);
             }
             catch (Exception $e){
@@ -89,28 +64,7 @@ class Baza {
         } else if( $table=="Pacjenci" ){
             $desiredKeys = array('name', 'surname', 'pesel');
             $params = array_intersect_key($parameters, array_flip($desiredKeys));
-
-            $query = "SELECT * FROM Pacjenci WHERE 1=1 ";
-
-            if (!empty($params['name'])){
-                $filter = "AND Imie LIKE '%%%s%%' ";
-                $filter = sprintf($filter, $params['name']);
-                $concat = "%s %s";
-                $query = sprintf($concat, $query, $filter);
-            }
-            if (!empty($params['surname'])){
-                $filter = "AND Nazwisko LIKE '%%%s%%' ";
-                $filter = sprintf($filter, $params['surname']);
-                $concat = "%s %s";
-                $query = sprintf($concat, $query, $filter);
-            }
-            if (!empty($params['pesel'])){
-                $filter = "AND PESEL LIKE '%%%s%%' ";
-                $filter = sprintf($filter, $params['pesel']);
-                $concat = "%s %s";
-                $query = sprintf($concat, $query, $filter);
-            }
-
+            $query = sprintf("CALL filterPatientsTable('%s','%s','%s')", $params["name"], $params["surname"], $params["pesel"]);
             try {
                 return self::$db->conn->query($query);
             }

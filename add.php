@@ -40,7 +40,7 @@
         <form method="POST" onsubmit="return confirm (\'Czy napewno chcesz dodać zabieg?\');" action="add.php?name=Zabieg">
         <div class="form-group">
             <label for="ID_Pacjenta">ID Pacjenta</label>
-            <input type="number" class="form-control" name="ID_Pacjenta" required>
+            <input type="number" min="1" class="form-control" name="ID_Pacjenta" required>
         </div>
         
         <div class="form-group py-2">
@@ -58,7 +58,7 @@
 
         <div class="form-group py-2">
             <label for="ID_Lekarza">ID Lekarza</label>
-            <input type="number" class="form-control" name="ID_Lekarza" required>
+            <input type="number" min="1" class="form-control" name="ID_Lekarza" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Dodaj</button>

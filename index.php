@@ -32,10 +32,12 @@
         </div>
 
         <?php
-            if($_GET['table']=="Zabiegi"){
-                echo $zabiegiForm;
-            } else if ($_GET['table']=="Pacjenci"){
-                echo $pacjenciForm;
+            if(isset($_GET['table'])){
+                if($_GET['table']=="Zabiegi"){
+                    echo $zabiegiForm;
+                } else if ($_GET['table']=="Pacjenci"){
+                    echo $pacjenciForm;
+                }
             }
         ?>
 
@@ -83,7 +85,7 @@
                             }
                         echo "</tbody>";
                     } else {
-                        echo "Wystąpił błąd!";
+                        echo "<div class='text-center'>Nie ma takiej tabeli</div>";
                     }
                 ?>
             </table>
