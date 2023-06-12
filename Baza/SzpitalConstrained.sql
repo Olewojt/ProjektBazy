@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 10, 2023 at 12:53 PM
+-- Generation Time: Jun 12, 2023 at 08:10 PM
 -- Server version: 8.0.32-0buntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.11
 
@@ -176,7 +176,7 @@ CREATE TABLE `Lekarze` (
 --
 
 INSERT INTO `Lekarze` (`ID_Lekarza`, `Imie`, `Nazwisko`, `Specjalizacja`, `Telefon`, `ID_Oddzialu`) VALUES
-(1, 'Lea', 'Szumski', 'Chłopskirozumolog', '860970332', 7),
+(1, 'Leon', 'Szumski', 'Chłopskirozumolog', '860970331', 7),
 (2, 'Albin', 'Kramarz', 'Wykopolog', '212650171', 14),
 (3, 'Gertruda', 'Bobowski', 'Wykopolog', '197853890', 37),
 (4, 'Megi', 'Korcz', 'Stomatolog', '232554342', 28),
@@ -317,7 +317,7 @@ CREATE TABLE `Pacjenci` (
 --
 
 INSERT INTO `Pacjenci` (`ID_Pacjenta`, `Imie`, `Nazwisko`, `PESEL`, `Telefon`, `Kod_Pocztowy`, `Adres`) VALUES
-(1, 'Cecyl', 'Klimas', '51083161874', '473213339', '00-001', 'ul. Lipowa 23'),
+(1, 'Cecyl', 'Klimas', '51083161874', '473213339', '00-001', 'ul. Lipowa 50'),
 (2, 'Strzeżymir', 'Kotala', '67081914796', '951915143', '00-002', 'ul. Laskowa 5'),
 (3, 'Klaudiusz', 'Rogala', '75041426773', '117985887', '00-003', 'ul. Studentska 10'),
 (4, 'Żarko', 'Jaskółka', '55120979534', '742673503', '00-004', 'ul. Bananowa 7'),
@@ -387,11 +387,9 @@ CREATE TABLE `Pielegniarki` (
 --
 
 INSERT INTO `Pielegniarki` (`ID_Pielegniarki`, `Imie`, `Nazwisko`, `Telefon`, `ID_Oddzialu`) VALUES
-(1, 'Teodozja', 'Żabińska', '841289368', 5),
-(2, 'Sulibor', 'Mączka', '256048159', 32),
 (3, 'Odon', 'Karbowiak', '600359173', 36),
 (4, 'Konradyn', 'Leśniowski', '2713444', 43),
-(5, 'Lilianna', 'Franke', '995048417', 24),
+(5, 'Teodozja', 'Żabińska', '841289368', 5),
 (6, 'Farida', 'Jóźwik', '797208801', 28),
 (7, 'Jaromir', 'Kunc', '753591285', 15),
 (8, 'Janina', 'Bator', '317347450', 13),
@@ -399,9 +397,9 @@ INSERT INTO `Pielegniarki` (`ID_Pielegniarki`, `Imie`, `Nazwisko`, `Telefon`, `I
 (10, 'Przemysława', 'Pogorzelska', '420080177', 8),
 (11, 'Miroda', 'Jędrychowska', '850811556', 43),
 (12, 'Miłosz', 'Deptuła', '746959103', 43),
-(13, 'Szczepan', 'Młynarski', '792290081', 45),
+(13, 'Janina', 'Bator', '317347450', 13),
 (14, 'Edward', 'Stefaniuk', '28598170', 16),
-(15, 'Wanda', 'Mech', '579748502', 30),
+(15, 'Jaromir', 'Kunc', '753591285', 15),
 (16, 'Filipa', 'Janczyk', '259777755', 11),
 (17, 'Lucjola', 'Sówka', '4597933', 4),
 (18, 'Weridiana', 'Łęcki', '731491235', 3),
@@ -418,7 +416,7 @@ INSERT INTO `Pielegniarki` (`ID_Pielegniarki`, `Imie`, `Nazwisko`, `Telefon`, `I
 (29, 'Lambert', 'Jakubowski', '400476430', 39),
 (30, 'Siemowit', 'Magnuszewski', '219520467', 22),
 (31, 'Stoigniew', 'Karolczyk', '770928757', 20),
-(32, 'Juta', 'Gręda', '270647021', 30),
+(32, 'Sulibor', 'Mączka', '256048159', 32),
 (33, 'Onufry', 'Jordan', '261017312', 22),
 (34, 'Wespazjan', 'Kulak', '134331020', 45),
 (35, 'Tacjana', 'Arciszewski', '613485367', 47),
@@ -429,7 +427,7 @@ INSERT INTO `Pielegniarki` (`ID_Pielegniarki`, `Imie`, `Nazwisko`, `Telefon`, `I
 (40, 'Narcyz', 'Kolasa', '113579084', 23),
 (41, 'Magda', 'Zarębski', '480392669', 4),
 (42, 'Mariusz', 'Wierzbowski', '384895142', 35),
-(43, 'Boguchwał', 'Auguścik', '142451553', 45),
+(43, 'Konradyn', 'Leśniowski', '271344442', 43),
 (44, 'Richariusz', 'Kuśmirek', '356898627', 24),
 (45, 'Tyberiusz', 'Borowa', '258088016', 5),
 (46, 'Oliwia', 'Dołęga', '245287892', 45),
@@ -457,8 +455,8 @@ CREATE TABLE `Zabiegi` (
 --
 
 INSERT INTO `Zabiegi` (`ID_Zabiegu`, `ID_Pacjenta`, `Rodzaj_Zabiegu`, `Data_Zabiegu`, `ID_Lekarza`) VALUES
-(1, 1, 'PILNE', '2022-11-12', 41),
-(2, 4, 'PILNE', '2022-11-15', 34),
+(1, 5, 'PILNE', '2022-11-12', 41),
+(2, 2, 'PILNE', '2022-11-15', 34),
 (3, 1, 'PILNE', '2022-11-19', 37),
 (4, 21, 'RUTYNA', '2022-12-01', 16),
 (5, 21, 'RUTYNA', '2022-12-09', 25),
@@ -506,8 +504,7 @@ INSERT INTO `Zabiegi` (`ID_Zabiegu`, `ID_Pacjenta`, `Rodzaj_Zabiegu`, `Data_Zabi
 (47, 22, 'RUTYNA', '2023-04-02', 47),
 (48, 9, 'RUTYNA', '2023-04-11', 32),
 (49, 23, 'PILNE', '2023-04-13', 31),
-(50, 40, 'PILNE', '2023-04-21', 17),
-(51, 5, 'PILNE', '2023-06-22', 5);
+(50, 40, 'PILNE', '2023-04-21', 17);
 
 --
 -- Indexes for dumped tables
@@ -580,7 +577,7 @@ ALTER TABLE `Pielegniarki`
 -- AUTO_INCREMENT for table `Zabiegi`
 --
 ALTER TABLE `Zabiegi`
-  MODIFY `ID_Zabiegu` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
+  MODIFY `ID_Zabiegu` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- Constraints for dumped tables
@@ -590,20 +587,20 @@ ALTER TABLE `Zabiegi`
 -- Constraints for table `Lekarze`
 --
 ALTER TABLE `Lekarze`
-  ADD CONSTRAINT `Lekarze_ibfk_1` FOREIGN KEY (`ID_Oddzialu`) REFERENCES `Oddzialy` (`ID_Oddzialu`);
+  ADD CONSTRAINT `Lekarze_ibfk_1` FOREIGN KEY (`ID_Oddzialu`) REFERENCES `Oddzialy` (`ID_Oddzialu`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `Pielegniarki`
 --
 ALTER TABLE `Pielegniarki`
-  ADD CONSTRAINT `Pielegniarki_ibfk_1` FOREIGN KEY (`ID_Oddzialu`) REFERENCES `Oddzialy` (`ID_Oddzialu`);
+  ADD CONSTRAINT `Pielegniarki_ibfk_1` FOREIGN KEY (`ID_Oddzialu`) REFERENCES `Oddzialy` (`ID_Oddzialu`) ON DELETE CASCADE ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `Zabiegi`
 --
 ALTER TABLE `Zabiegi`
-  ADD CONSTRAINT `Zabiegi_ibfk_1` FOREIGN KEY (`ID_Lekarza`) REFERENCES `Lekarze` (`ID_Lekarza`),
-  ADD CONSTRAINT `Zabiegi_ibfk_2` FOREIGN KEY (`ID_Pacjenta`) REFERENCES `Pacjenci` (`ID_Pacjenta`);
+  ADD CONSTRAINT `Zabiegi_ibfk_1` FOREIGN KEY (`ID_Lekarza`) REFERENCES `Lekarze` (`ID_Lekarza`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `Zabiegi_ibfk_2` FOREIGN KEY (`ID_Pacjenta`) REFERENCES `Pacjenci` (`ID_Pacjenta`) ON DELETE CASCADE ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
