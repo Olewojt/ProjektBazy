@@ -49,6 +49,12 @@ class Baza {
         return self::$db->conn->query("CALL importPrepare('$table')");
     }
 
+    public static function remove($table, $id){
+        $colname = self::columns($table)[0];
+        $query = sprintf("DELETE FROM %s WHERE %s=%s",$table, $colname, $id);
+        return self::$db->conn->query($query);
+    }
+
     public static function filter($table, $parameters) {
         if ($table=="Zabiegi"){
             $desiredKeys = array('dateOrder', 'date', 'priority');

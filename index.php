@@ -70,17 +70,19 @@
                         $cols = Baza::columns($_GET['table']);
     
                         echo "<thead>";
-                            foreach($cols as $col) {
-                                echo "<th scope='col'>".$col."</th>";
-                            }
+                        foreach($cols as $col) {
+                            echo "<th scope='col'>".$col."</th>";
+                        }
+                        echo "<th scope='col'>Usuń</th>";
                         echo "</thead>";
     
                         echo "<tbody>";
-                            while ($row = $tab->fetch_assoc()) {
+                            while ( $row = $tab->fetch_assoc() ) {
                                 echo "<tr>";
                                 foreach ($row as $data) {
                                     echo "<td>".$data."</td>";
                                 }
+                                echo "<td><a onclick=\"return confirm('Czy napewno chcesz usunąć?');\" href='remove.php?table=".$_GET['table']."&record=".$row[$cols[0]]."'>Usuń</a></td>";
                                 echo "</tr>";
                             }
                         echo "</tbody>";
