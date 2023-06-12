@@ -75,6 +75,7 @@
                     ); 
                     echo $form;
                 }
+                echo "<div class='container d-flex justify-content-center'><a class='btn btn-danger text-center' onclick=\"return confirm('Czy napewno chcesz usunąć?');\" href='remove.php?table=".$_GET['table']."&record=".$_GET['record']."'>Usuń</a></div>";
             }
         ?>
 
