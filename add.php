@@ -46,6 +46,7 @@
         <div class="form-group py-2">
             <label for="rodzaj_zabiegu">Rodzaj Zabiegu</label>
             <select name="Rodzaj_Zabiegu" class="form-control" required>
+                <option value="%s">%s</option>
                 <option value="RUTYNA">Rutyna</option>
                 <option value="PILNE">Pilne</option>
             </select>

@@ -46,19 +46,9 @@
             <table class="table table-responsive" style="width: 90%">
                 <?php
                     if(isset($_GET['dateOrder']) & isset($_GET['date']) & isset($_GET['priority']) ){
-                        $parameters = [
-                            "dateOrder" => $_GET['dateOrder'],
-                            "date" => $_GET['date'],
-                            "priority" => $_GET['priority'],
-                        ];
-                        $tab = Baza::filter($_GET['table'], $parameters);
+                        $tab = Baza::filter($_GET['table'], $_GET);
                     } else if(isset($_GET['name']) & isset($_GET['surname']) & isset($_GET['pesel'])){
-                        $parameters = [
-                            "name" => $_GET['name'],
-                            "surname" => $_GET['surname'],
-                            "pesel" => $_GET['pesel'],
-                        ];
-                        $tab = Baza::filter($_GET['table'], $parameters);
+                        $tab = Baza::filter($_GET['table'], $_GET);
                     }
                     else {
                         $tab = Baza::getTable($_GET['table']); 
@@ -73,7 +63,7 @@
                         foreach($cols as $col) {
                             echo "<th scope='col'>".$col."</th>";
                         }
-                        echo "<th scope='col'>Usuń</th>";
+                        echo "<th scope='col'></th>";
                         echo "</thead>";
     
                         echo "<tbody>";
@@ -82,7 +72,7 @@
                                 foreach ($row as $data) {
                                     echo "<td>".$data."</td>";
                                 }
-                                echo "<td><a onclick=\"return confirm('Czy napewno chcesz usunąć?');\" href='remove.php?table=".$_GET['table']."&record=".$row[$cols[0]]."'>Usuń</a></td>";
+                                echo "<td><a href='modify.php?table=".$_GET['table']."&record=".$row[$cols[0]]."'>Edytuj</a></td>";
                                 echo "</tr>";
                             }
                         echo "</tbody>";

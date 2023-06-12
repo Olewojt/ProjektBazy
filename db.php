@@ -55,12 +55,90 @@ class Baza {
         return self::$db->conn->query($query);
     }
 
+    public static function getResource($table, $id){
+        $colname = self::columns($table)[0];
+        $query = sprintf("SELECT * FROM %s WHERE %s=%s",$table, $colname, $id);
+        $res = self::$db->conn->query($query);
+        $first = $res->fetch_row();
+        if (!empty($first)){
+            return $first;
+        } else {
+            return false;
+        }
+    }
+
+    public static function update($table, $id, $parameters){
+        if ($table == "Zabiegi"){
+            $desiredKeys = array('patient_id', 'type', 'Data_Zabiegu', 'doctor_id');
+            $params = array_intersect_key($parameters, array_flip($desiredKeys));
+            $query = sprintf("UPDATE Zabiegi SET ID_Pacjenta=%s, Rodzaj_Zabiegu='%s', Data_Zabiegu='%s', ID_Lekarza=%s WHERE ID_Zabiegu=%s", 
+                $params['patient_id'],$params['type'],$params['Data_Zabiegu'],$params['doctor_id'], $id
+            );
+            try{
+                return self::$db->conn->query($query);
+            } catch (Exception $e){
+                return false;
+            }
+
+        } else if ($table == "Pacjenci"){
+            $desiredKeys = array('name', 'surname', 'pesel', 'phone', 'zipCode', 'address');
+            $params = array_intersect_key($parameters, array_flip($desiredKeys));
+            $query = sprintf("UPDATE Pacjenci SET Imie='%s', Nazwisko='%s', PESEL='%s', Telefon='%s', Kod_Pocztowy='%s', Adres='%s' WHERE ID_Pacjenta=%s", 
+                $params['name'],
+                $params['surname'],
+                $params['pesel'],
+                $params['phone'],
+                $params['zipCode'],
+                $params['address'],
+                $id
+            );
+            try{
+                return self::$db->conn->query($query);
+            } catch (Exception $e){
+                return false;
+            }
+
+        } else if ($table == "Lekarze"){
+            $desiredKeys = array('name', 'surname', 'specialty', 'phone', 'oddzial');
+            $params = array_intersect_key($parameters, array_flip($desiredKeys));
+            $query = sprintf("UPDATE Lekarze SET Imie='%s', Nazwisko='%s', Specjalizacja='%s', Telefon='%s', ID_Oddzialu=%s WHERE ID_Lekarza=%s", 
+                $params['name'],
+                $params['surname'],
+                $params['specialty'],
+                $params['phone'],
+                $params['oddzial'],
+                $id
+            );
+            try{
+                return self::$db->conn->query($query);
+            } catch (Exception $e){
+                return false;
+            }
+
+        } else if ($table == "Pielegniarki"){
+            $desiredKeys = array('name', 'surname', 'phone', 'oddzial');
+            $params = array_intersect_key($parameters, array_flip($desiredKeys));
+            $query = sprintf("UPDATE Pielegniarki SET Imie='%s', Nazwisko='%s', Telefon='%s', ID_Oddzialu=%s WHERE ID_Pielegniarki=%s", 
+                $params['name'],
+                $params['surname'],
+                $params['phone'],
+                $params['oddzial'],
+                $id
+            );
+            try{
+                return self::$db->conn->query($query);
+            } catch (Exception $e){
+                print($e);
+                return false;
+            }
+        }
+    }
+
     public static function filter($table, $parameters) {
         if ($table=="Zabiegi"){
             $desiredKeys = array('dateOrder', 'date', 'priority');
             $params = array_intersect_key($parameters, array_flip($desiredKeys));
             $query = sprintf("CALL filterProcedureTable('%s','%s','%s')", $params["date"], $params["priority"], $params["dateOrder"]);
-            echo $query;
             try {
                 return self::$db->conn->query($query);
             }
