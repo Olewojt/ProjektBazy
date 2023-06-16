@@ -36,7 +36,7 @@ class Baza {
         }
     }
 
-    // Mozna sprawdzic czy dane sa poprawne. Albo chuj aby dzialalo jako tako
+    // Mozna sprawdzic czy dane sa poprawne.
     public static function addPatient($name, $surname, $pesel, $phone, $zip_code, $address){
         self::$db->conn->query("CALL addPatient('$name', '$surname', '$pesel', '$phone', '$zip_code', '$address')");
     }

@@ -2,7 +2,7 @@
     include 'db.php';
 
     $form1 = '
-        <form method="POST" onsubmit="return confirm (\'Czy napewno chcesz dodać pacjenta?\');" action="add.php?name=Pacjent">
+        <form method="POST" onsubmit="return confirm (\'Czy napewno chcesz dodać pacjenta?\');" action="add.php?table=Pacjent">
         <div class="form-group">
             <label for="name">Imie</label>
             <input type="text" class="form-control" name="name" maxlength="100" required>
@@ -37,7 +37,7 @@
     ';
 
     $form2 = '
-        <form method="POST" onsubmit="return confirm (\'Czy napewno chcesz dodać zabieg?\');" action="add.php?name=Zabieg">
+        <form method="POST" onsubmit="return confirm (\'Czy napewno chcesz dodać zabieg?\');" action="add.php?table=Zabieg">
         <div class="form-group">
             <label for="ID_Pacjenta">ID Pacjenta</label>
             <input type="number" min="1" class="form-control" name="ID_Pacjenta" required>
@@ -46,7 +46,7 @@
         <div class="form-group py-2">
             <label for="rodzaj_zabiegu">Rodzaj Zabiegu</label>
             <select name="Rodzaj_Zabiegu" class="form-control" required>
-                <option value="%s">%s</option>
+                <option value=""></option>
                 <option value="RUTYNA">Rutyna</option>
                 <option value="PILNE">Pilne</option>
             </select>
@@ -96,7 +96,7 @@
             </div>
 
             <?php
-                if(isset($_GET['table'])){
+                if( isset($_GET['table'])){
                     $name = $_GET['table'];
                     if($name=="Pacjent"){
                         print($form1);
@@ -106,14 +106,14 @@
                     }
 
                     $valid = False;
-                    foreach ($_POST as $elem){
-                        if (empty($elem)){
+                    foreach ($_POST as $key => $value){
+                        if (strlen($value)==0){
                             $valid = False;
                         } else {
                             $valid = True;
                         }
                     }
-
+                    
                     if($valid){
                         $db = Baza::getConnection();
                         if ($name == "Pacjent") {
